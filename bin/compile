@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+set -e
+
+a() { sed 's/^/-----> /'; }
+i() { sed 's/^/       /'; }
+
+cd "$1"
+
+# URLs of the Ubuntu packages to install (see main README.md for how to obtain them)
+package_urls=(http://apt.postgresql.org/pub/repos/apt/pool/main/libd/libdbd-pg-perl/libdbd-pg-perl_3.18.0-1.pgdg22.04%2b4_amd64.deb
+http://archive.ubuntu.com/ubuntu/pool/main/libh/libhtml-tagset-perl/libhtml-tagset-perl_3.20-4_all.deb
+http://archive.ubuntu.com/ubuntu/pool/main/libu/liburi-perl/liburi-perl_5.10-1_all.deb
+http://archive.ubuntu.com/ubuntu/pool/main/libh/libhtml-parser-perl/libhtml-parser-perl_3.76-1build2_amd64.deb
+http://archive.ubuntu.com/ubuntu/pool/main/libc/libcgi-pm-perl/libcgi-pm-perl_4.54-1_all.deb
+http://archive.ubuntu.com/ubuntu/pool/main/libf/libfcgi/libfcgi0ldbl_2.4.2-2build2_amd64.deb
+http://archive.ubuntu.com/ubuntu/pool/main/libf/libfcgi-perl/libfcgi-perl_0.82%2bds-1build1_amd64.deb
+http://archive.ubuntu.com/ubuntu/pool/main/libc/libcgi-fast-perl/libcgi-fast-perl_2.15-1_all.deb
+http://archive.ubuntu.com/ubuntu/pool/main/libc/libclone-perl/libclone-perl_0.45-1build3_amd64.deb
+http://archive.ubuntu.com/ubuntu/pool/main/libd/libdbi-perl/libdbi-perl_1.643-3build3_amd64.deb
+http://archive.ubuntu.com/ubuntu/pool/main/libe/libencode-locale-perl/libencode-locale-perl_1.05-1.1_all.deb
+http://archive.ubuntu.com/ubuntu/pool/main/libf/libfcgi/libfcgi-bin_2.4.2-2build2_amd64.deb
+http://archive.ubuntu.com/ubuntu/pool/main/libh/libhtml-template-perl/libhtml-template-perl_2.97-1.1_all.deb
+http://archive.ubuntu.com/ubuntu/pool/main/libt/libtimedate-perl/libtimedate-perl_2.3300-2_all.deb
+http://archive.ubuntu.com/ubuntu/pool/main/libh/libhttp-date-perl/libhttp-date-perl_6.05-1_all.deb
+http://archive.ubuntu.com/ubuntu/pool/main/libi/libio-html-perl/libio-html-perl_1.004-2_all.deb
+http://archive.ubuntu.com/ubuntu/pool/main/libl/liblwp-mediatypes-perl/liblwp-mediatypes-perl_6.04-1_all.deb
+http://archive.ubuntu.com/ubuntu/pool/main/libh/libhttp-message-perl/libhttp-message-perl_6.36-1_all.deb
+http://archive.ubuntu.com/ubuntu/pool/main/libt/libterm-readkey-perl/libterm-readkey-perl_2.38-1build4_amd64.deb
+http://archive.ubuntu.com/ubuntu/pool/universe/p/postgresql-autodoc/postgresql-autodoc_1.41%2b20200921-1_all.deb)
+
+echo "Will install postgresql-autodoc" | i
+
+# Install packages to custom directory in application slug
+echo "Installing Debian packages:" | a
+install_dir=.scalingo-buildpack-postgresql-autodoc
+mkdir -p $install_dir
+for u in "${package_urls[@]}"; do
+  echo "  * ${u##*/}" | i
+  curl -s "$u" >pkg.deb && dpkg -x pkg.deb "$install_dir" && rm pkg.deb
+done
+
+# Create .profile.d script setting PATH, PERL5LIB and POSTGRESQL_AUTODOC_TEMPLATES_PATH
+mkdir -p .profile.d
+echo "PATH=/app/$install_dir/usr/bin:\$PATH" >.profile.d/postgresql-autodoc.sh
+echo "export PERL5LIB=/app/$install_dir/usr/lib/x86_64-linux-gnu/perl5/5.34:\$PERL5LIB" >>.profile.d/postgresql-autodoc.sh
+echo "export PERL5LIB=/app/$install_dir/usr/share/perl5:\$PERL5LIB" >>.profile.d/postgresql-autodoc.sh
+echo "export POSTGRESQL_AUTODOC_TEMPLATES_PATH=/app/$install_dir/usr/share/postgresql-autodoc" >>.profile.d/postgresql-autodoc.sh
+
+echo "Successfully installed postgresql-autodoc $postgresql_autodoc_version" | a
+echo "The binaries are in /app/$install_dir/usr/bin" | i
+echo
