@@ -8,7 +8,7 @@ i() { sed 's/^/       /'; }
 cd "$1"
 
 # URLs of the Ubuntu packages to install (see main README.md for how to obtain them)
-package_urls=(http://apt.postgresql.org/pub/repos/apt/pool/main/libd/libdbd-pg-perl/libdbd-pg-perl_3.18.0-1.pgdg22.04%2b4_amd64.deb
+package_urls=(https://ftp.postgresql.org/pub/repos/apt/pool/main/libd/libdbd-pg-perl/libdbd-pg-perl_3.18.0-2.pgdg22.04%2B1_amd64.deb
 http://archive.ubuntu.com/ubuntu/pool/main/libh/libhtml-tagset-perl/libhtml-tagset-perl_3.20-4_all.deb
 http://archive.ubuntu.com/ubuntu/pool/main/libu/liburi-perl/liburi-perl_5.10-1_all.deb
 http://archive.ubuntu.com/ubuntu/pool/main/libh/libhtml-parser-perl/libhtml-parser-perl_3.76-1build2_amd64.deb
