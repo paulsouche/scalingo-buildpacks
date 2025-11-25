@@ -32,11 +32,15 @@ By installing precisely this set of packages, as figured out by `apt`, the effec
 
 ### graphviz
 
-[graphviz](https://graphviz.org/) is available in this repository for a scalingo stack 22. Please checkout the [graphviz-22](https://github.com/paulsouche/scalingo-buildpacks/tree/graphviz-22) branch.
+[graphviz](https://graphviz.org/) is available in this repository.
+ - For a scalingo stack 22, please checkout the [graphviz-22](https://github.com/paulsouche/scalingo-buildpacks/tree/graphviz-22) branch.
+ - For a scalingo stack 24, please checkout the [graphviz-24](https://github.com/paulsouche/scalingo-buildpacks/tree/graphviz-24) branch.
 
 ### postgresql-autodoc
 
-[postgresql-autodoc](https://github.com/cbbrowne/autodoc) is available in this repository for a scalingo stack 22. Please checkout the [postgresql-autodoc-22](https://github.com/paulsouche/scalingo-buildpacks/tree/postgresql-autodoc-22) branch.
+[postgresql-autodoc](https://github.com/cbbrowne/autodoc) is available in this repository.
+ - For a scalingo stack 22, please checkout the [postgresql-autodoc-22](https://github.com/paulsouche/scalingo-buildpacks/tree/postgresql-autodoc-22) branch.
+ - For a scalingo stack 24, please checkout the [postgresql-autodoc-24](https://github.com/paulsouche/scalingo-buildpacks/tree/postgresql-autodoc-24) branch.
 
 ## License
 
